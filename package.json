@@ -2,6 +2,7 @@
   "name": "travelgrid",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "npm run build:client && npm run build:worker",
     "build:client": "vite build",
