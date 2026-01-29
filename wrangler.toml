@@ -1,9 +1,18 @@
-name = "travelgridd"
+name = "travelgrid"
 compatibility_date = "2026-01-29"
+type = "javascript"
 
 [build]
-command = "chmod a+x build.sh && ./build.sh"
+command = "bash build.sh"
 
-[assets]
-directory = "./public"
+[build.upload]
+main = "dist/worker/index.js"
+format = "modules"
+
+[site]
+bucket = "./public"
 not_found_handling = "404-page"
+
+# Note:
+# - Secrets (API keys) should be added with `wrangler secret put <NAME>` or via dashboard.
+# - The Worker can be published and routed to /api/* on your domain, and the site published from ./public.
