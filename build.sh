@@ -24,6 +24,20 @@ else
   npm install
 fi
 
+# Install client dependencies
+info "Installing client dependencies"
+cd client
+if exists package-lock.json; then
+  npm ci
+elif exists pnpm-lock.yaml; then
+  pnpm install --frozen-lockfile
+elif exists yarn.lock; then
+  yarn install --frozen-lockfile
+else
+  npm install
+fi
+cd ..
+
 # -- Build frontend -------------------------------------------------------
 # Prefer explicit scripts if provided: build:client > build > vite build
 info "Building frontend (Vite)"

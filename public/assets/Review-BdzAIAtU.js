@@ -1,0 +1,1 @@
+import{j as e}from"./index-Ckn4b-gh.js";function l(){return e.jsx("div",{className:"flex flex-1 items-center justify-center w-full h-full",children:e.jsx("h2",{className:"text-3xl font-bold text-green-800",children:"Review Page"})})}export{l as default};

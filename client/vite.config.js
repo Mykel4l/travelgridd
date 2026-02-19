@@ -19,6 +19,10 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    outDir: '../public',
+    emptyOutDir: true,
+  },
   server: {
     hmr: {
       overlay: false,
