@@ -21,6 +21,7 @@ export default defineConfig({
   },
   build: {
     outDir: '../public',
+    // Safe to empty since worker build outputs to dist/worker/, not public/
     emptyOutDir: true,
   },
   server: {
