@@ -1,4 +1,4 @@
-name = "travelgrid"
+name = "travelgridd"
 main = "dist/worker/index.js"
 compatibility_date = "2026-01-29"
 
