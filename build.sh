@@ -24,6 +24,20 @@ else
   npm install
 fi
 
+# Install client dependencies
+info "Installing client dependencies"
+cd client
+if exists package-lock.json; then
+  npm ci
+elif exists pnpm-lock.yaml; then
+  pnpm install --frozen-lockfile
+elif exists yarn.lock; then
+  yarn install --frozen-lockfile
+else
+  npm install
+fi
+cd ..
+
 # -- Build frontend -------------------------------------------------------
 # Prefer explicit scripts if provided: build:client > build > vite build
 info "Building frontend (Vite)"
@@ -45,9 +59,13 @@ fi
 # -- Build worker ---------------------------------------------------------
 info "Bundling worker"
 
-# Determine entrypoint (prefer src/worker/index.{ts,js})
+# Determine entrypoint (prefer client/src/worker/index.{ts,js} then fallback to src/worker/index.{ts,js})
 ENTRY=""
-if exists "src/worker/index.ts"; then
+if exists "client/src/worker/index.ts"; then
+  ENTRY="client/src/worker/index.ts"
+elif exists "client/src/worker/index.js"; then
+  ENTRY="client/src/worker/index.js"
+elif exists "src/worker/index.ts"; then
   ENTRY="src/worker/index.ts"
 elif exists "src/worker/index.js"; then
   ENTRY="src/worker/index.js"
@@ -58,7 +76,7 @@ elif exists "src/index.js"; then
 fi
 
 if [ -z "$ENTRY" ]; then
-  echo "Error: No worker entrypoint found (looked for src/worker/index.{ts,js} and src/index.{ts,js})"
+  echo "Error: No worker entrypoint found (looked for client/src/worker/index.{ts,js}, src/worker/index.{ts,js} and src/index.{ts,js})"
   exit 1
 fi
 
