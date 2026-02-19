@@ -238,7 +238,7 @@ router.all('*', async (req, env) => {
   if (env.ASSETS) {
     const url = new URL(req.url)
     url.pathname = '/index.html'
-    return env.ASSETS.fetch(new Request(url, req))
+    return env.ASSETS.fetch(new Request(url.toString(), req))
   }
   return new Response('Not Found', { status: 404 })
 })
