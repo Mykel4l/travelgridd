@@ -2,7 +2,7 @@
 # Final build script for TravelGrid:
 # - Installs dependencies
 # - Builds Vite frontend into ./public
-# - Bundles Cloudflare Worker to ./dist/worker/index.js with esbuild
+# - Bundles Cloudflare Pages Worker to ./public/_worker.js with esbuild
 set -euo pipefail
 set -x
 
@@ -80,21 +80,20 @@ if [ -z "$ENTRY" ]; then
   exit 1
 fi
 
-mkdir -p dist/worker
+mkdir -p public
 
-# Use esbuild to produce a module-format bundle suitable for Wrangler
+# Use esbuild to produce a module-format bundle suitable for Cloudflare Pages
 # --platform=neutral to avoid Node polyfills; adjust target if needed
 npx esbuild "$ENTRY" \
   --bundle \
   --target=es2022 \
   --format=esm \
-  --outfile=dist/worker/index.js \
+  --outfile=public/_worker.js \
   --platform=neutral \
   --define:process.env.NODE_ENV=\"production\"
 
 # -- Post build checks ---------------------------------------------------
 info "Build complete. Artifacts:"
 ls -la ./public || true
-ls -la ./dist/worker || true
 
 echo "Done"
