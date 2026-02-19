@@ -3,8 +3,8 @@ node_modules/
 client/node_modules/
 
 # Build outputs
-public/
-dist/
+/public/
+/dist/
 
 # Environment variables
 .env

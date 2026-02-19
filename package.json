@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm run build:client && npm run build:worker",
     "build:client": "cd client && vite build",
-    "build:worker": "npx esbuild src/worker/index.js --bundle --target=es2022 --outfile=dist/worker/index.js --platform=neutral"
+    "build:worker": "npx esbuild client/src/worker/index.js --bundle --target=es2022 --format=esm --outfile=dist/worker/index.js --platform=neutral"
   },
   "devDependencies": {
     "esbuild": "^0.18.0",

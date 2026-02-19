@@ -233,7 +233,15 @@ router.all('/api/:rest*', (req, env) => {
   }, 501, origin, env)
 })
 
-router.all('*', () => new Response('Not Found', { status: 404 }))
+router.all('*', async (req, env) => {
+  // SPA fallback: serve index.html for non-API routes
+  if (env.ASSETS) {
+    const url = new URL(req.url)
+    url.pathname = '/index.html'
+    return env.ASSETS.fetch(new Request(url.toString(), req))
+  }
+  return new Response('Not Found', { status: 404 })
+})
 
 export default {
   async fetch(request, env, ctx) {
